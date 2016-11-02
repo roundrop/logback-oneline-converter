@@ -5,7 +5,7 @@ A custom logback converter which outputs each log with in line forcely.
 ## What is this for?
 
 Java outputs stacktrace in multiple lines, and it makes difficult to parse the log.
-This converter replaces the line feed characters \n with \\n so that log messages will be in one line.
+This converter replaces the line feed characters \n with \\\n so that log messages will be in one line.
 
 ## Installation
 
