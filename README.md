@@ -9,7 +9,23 @@ This converter replaces the line feed characters \n with \\n so that log message
 
 ## Installation
 
-TODO
+### Gradle
+
+```
+dependencies {
+  compile group: 'com.github.roundrop', name: 'logback-oneline-converter', version: '1.0.+'
+}
+```
+
+### Maven
+
+```xml
+<dependency>
+    <groupId>com.github.roundrop</groupId>
+    <artifactId>logback-oneline-converter</artifactId>
+    <version>[1.0,)</version>
+</dependency>
+```
 
 ## How to use
 

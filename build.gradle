@@ -1,8 +1,15 @@
-group 'com.github.roundrop'
-version '1.0.0-SNAPSHOT'
-
 apply plugin: 'java'
-apply plugin: "maven"
+apply plugin: 'maven'
+apply plugin: 'signing'
+
+group 'com.github.roundrop'
+archivesBaseName = 'logback-oneline-converter'
+version '1.0.0'
+description = 'A custom logback converter which outputs each log with in line forcely'
+
+task wrapper(type: Wrapper) {
+  gradleVersion = '2.13'
+}
 
 sourceCompatibility = 1.5
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
@@ -18,6 +25,82 @@ dependencies {
   testCompile group: 'junit', name: 'junit', version: '4.11'
 }
 
-task wrapper(type: Wrapper) {
-  gradleVersion = '2.13'
+def isDevBuild
+def isCiBuild
+def isReleaseBuild
+def sonatypeRepositoryUrl
+if (hasProperty("release")) {
+  isReleaseBuild = true
+  sonatypeRepositoryUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+} else if (hasProperty("ci")) {
+  isCiBuild = true
+  version += "-SNAPSHOT"
+  sonatypeRepositoryUrl = "https://oss.sonatype.org/content/repositories/snapshots/"
+} else {
+  isDevBuild = true
+  version += "-SNAPSHOT"
+}
+
+task javadocJar(type: Jar) {
+  classifier = 'javadoc'
+  from "${buildDir}/javadoc"
+}
+
+task sourcesJar(type: Jar) {
+  classifier = 'sources'
+  from sourceSets.main.allSource
+}
+
+artifacts {
+  archives javadocJar, sourcesJar
+}
+
+signing {
+  required { isReleaseBuild }
+  sign configurations.archives
+}
+
+uploadArchives {
+  repositories {
+    if (isDevBuild) {
+      mavenLocal()
+    }
+    else {
+      mavenDeployer {
+        if(isReleaseBuild) {
+          beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+        }
+
+        repository(url: sonatypeRepositoryUrl) {
+          authentication(userName: sonatypeUsername, password: sonatypePassword)
+        }
+
+        pom.project {
+          name 'logback-oneline-converter'
+          packaging 'jar'
+          description 'A custom logback converter which outputs each log with in line forcely'
+          url 'https://github.com/roundrop/logback-oneline-converter'
+
+          scm {
+            url "scm:git@github.com:roundrop/logback-oneline-converter.git"
+            connection "scm:git@github.com:roundrop/logback-oneline-converter.git"
+            developerConnection "scm:git@github.com:roundrop/logback-oneline-converter.git"
+          }
+          licenses {
+            license {
+              name 'MIT'
+              url 'https://opensource.org/licenses/MIT'
+            }
+          }
+          developers {
+            developer {
+              id 'roundrop'
+              name 'Ryuji Yamashita'
+              email 'roundrop@gmail.com'
+            }
+          }
+        }
+      }
+    }
+  }
 }
