@@ -1,0 +1,23 @@
+group 'com.github.roundrop'
+version '1.0.0-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: "maven"
+
+sourceCompatibility = 1.5
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+repositories {
+  mavenCentral()
+}
+
+def logbackVersion = '1.1.7'
+dependencies {
+  compileOnly group: 'ch.qos.logback', name: 'logback-classic', version: logbackVersion
+  testCompile group: 'ch.qos.logback', name: 'logback-classic', version: logbackVersion
+  testCompile group: 'junit', name: 'junit', version: '4.11'
+}
+
+task wrapper(type: Wrapper) {
+  gradleVersion = '2.13'
+}
