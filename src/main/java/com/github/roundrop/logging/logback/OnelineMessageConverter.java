@@ -7,6 +7,6 @@ public class OnelineMessageConverter extends ClassicConverter {
     @Override
     public String convert(ILoggingEvent event) {
         final String message = event.getFormattedMessage();
-        return message.replaceAll("\n", "\\\\n");
+        return Oneliner.toOnline(message);
     }
 }
