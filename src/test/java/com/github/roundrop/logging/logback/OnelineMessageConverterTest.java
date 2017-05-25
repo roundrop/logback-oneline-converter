@@ -31,8 +31,22 @@ public class OnelineMessageConverterTest {
     }
 
     @Test
-    public void withLineFeed() throws Exception {
+    public void withLF() throws Exception {
         event.setMessage("foo\nbar\nbaz");
+        String s = converter.convert(event);
+        assertThat(s, is("foo\\nbar\\nbaz"));
+    }
+
+    @Test
+    public void withCRLF() throws Exception {
+        event.setMessage("foo\r\nbar\r\nbaz");
+        String s = converter.convert(event);
+        assertThat(s, is("foo\\nbar\\nbaz"));
+    }
+
+    @Test
+    public void withCR() throws Exception {
+        event.setMessage("foo\rbar\rbaz");
         String s = converter.convert(event);
         assertThat(s, is("foo\\nbar\\nbaz"));
     }

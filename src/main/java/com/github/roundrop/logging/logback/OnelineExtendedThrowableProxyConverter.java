@@ -7,6 +7,6 @@ public class OnelineExtendedThrowableProxyConverter extends ExtendedThrowablePro
     @Override
     protected String throwableProxyToString(IThrowableProxy tp) {
         final String string = super.throwableProxyToString(tp);
-        return string.replaceAll("\n", "\\\\n").replaceAll("\t", "    ");
+        return Oneliner.toOnline(string);
     }
 }
