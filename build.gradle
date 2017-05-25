@@ -8,7 +8,7 @@ version '1.0.0'
 description = 'A custom logback converter which outputs each log with in line forcely'
 
 task wrapper(type: Wrapper) {
-  gradleVersion = '3.5'
+  gradleVersion = '2.13'
 }
 
 sourceCompatibility = 1.5
