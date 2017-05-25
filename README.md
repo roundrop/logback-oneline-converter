@@ -5,7 +5,7 @@ A custom logback converter which outputs each log with in line forcely.
 ## What is this for?
 
 Java outputs stacktrace in multiple lines, and it makes difficult to parse the log.
-This converter replaces the line feed characters \n with \\\n so that log messages will be in one line.
+This converter replaces the line feed characters (\n,\r,\r\n) with \\\n so that log messages will be in one line.
 
 ## Installation
 
@@ -13,7 +13,7 @@ This converter replaces the line feed characters \n with \\\n so that log messag
 
 ```
 dependencies {
-  compile group: 'com.github.roundrop', name: 'logback-oneline-converter', version: '1.0.+'
+  compile group: 'com.github.roundrop', name: 'logback-oneline-converter', version: '1.1.+'
 }
 ```
 
@@ -23,7 +23,7 @@ dependencies {
 <dependency>
     <groupId>com.github.roundrop</groupId>
     <artifactId>logback-oneline-converter</artifactId>
-    <version>[1.0,)</version>
+    <version>[1.1,)</version>
 </dependency>
 ```
 

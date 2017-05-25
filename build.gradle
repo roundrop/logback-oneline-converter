@@ -4,7 +4,7 @@ apply plugin: 'signing'
 
 group 'com.github.roundrop'
 archivesBaseName = 'logback-oneline-converter'
-version '1.0.0'
+version '1.1.0'
 description = 'A custom logback converter which outputs each log with in line forcely'
 
 task wrapper(type: Wrapper) {
